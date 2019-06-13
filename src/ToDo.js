@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./ToDo.css";
 export default class ToDo extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +11,7 @@ export default class ToDo extends Component {
     this.toggleForm = this.toggleForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
   handleRemove() {
     this.props.removeToDo(this.props.id);
@@ -32,6 +33,10 @@ export default class ToDo extends Component {
       [e.target.name]: e.target.value
     });
   }
+  handleToggle(e) {
+    this.props.toggleToDo(this.props.id);
+  }
+
   render() {
     let result;
     if (this.state.isEditing) {
@@ -53,7 +58,12 @@ export default class ToDo extends Component {
         <div>
           <button onClick={this.toggleForm}>Edit</button>
           <button onClick={this.handleRemove}>X</button>
-          <li>{this.props.task}</li>
+          <li
+            className={this.props.completed ? "completed" : ""}
+            onClick={this.handleToggle}
+          >
+            {this.props.task}
+          </li>
         </div>
       );
     }
